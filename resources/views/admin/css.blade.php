@@ -1,3 +1,13 @@
+<style>
+    #sidebar {
+        width: 250px; /* Set a fixed width for the sidebar */
+    }
+
+    .page-content {
+        flex: 1; /* Allow the main content to take the remaining space */
+        padding: 20px; /* Add some padding */
+    }
+</style>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Admin </title>

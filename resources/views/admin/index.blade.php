@@ -7,12 +7,10 @@
 
 <body>
     @include('admin.header')
-    @include('admin.sidebar')
-
-    @include('admin.body')
-
-
+    <div class="d-flex">
+        @include('admin.sidebar')
+        @include('admin.body')
+    </div>
     @include('admin.footer')
 </body>
 
-</html>
