@@ -36,15 +36,32 @@
                           <li class="nav-item">
                              <a class="nav-link" href="contact.html">Contact Us</a>
                           </li>
-                          <li class="nav-item">
-                            <a class="btn btn-success mr-2" href="{{url('register')}}">Register</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="btn btn-primary" href="{{url('login')}}">Login</a>
-                         </li>
+                         
+                         
+
+                         @if (Route::has('login'))
+                         {{-- <nav class="-mx-3 flex flex-1 justify-end"> --}}
+                             @auth
+                             <x-app-layout>
+ 
+                             </x-app-layout>
+                             
+                             @else
+                             <li class="nav-item">
+                              <a class="btn btn-primary" href="{{url('login')}}">Login</a>
+                           </li>
+
+                                 @if (Route::has('register'))
+                                 <li class="nav-item">
+                                    <a class="btn btn-success ml-2" href="{{url('register')}}">Register</a>
+                                </li>
+                                 @endif
+                             @endauth
+                         </nav>
+                     @endif
                        </ul>
                     </div>
-                 </nav>
+                 {{-- </nav> --}}
               </div>
            </div>
         </div>

@@ -46,6 +46,7 @@
                    <br><br>
                    Distributed by <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
                    </p>
+                   
 
                 </div>
              </div>
