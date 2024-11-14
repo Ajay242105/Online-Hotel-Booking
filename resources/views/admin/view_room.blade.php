@@ -33,6 +33,18 @@
                         <td>${{ $room->price }}</td>
                         <td>{{ $room->wifi }}</td>
                         <td>{{ $room->room_type }}</td>
+
+                        <td>
+                            <!-- Edit Button -->
+                            <a href="{{ url('edit_room', $room->id) }}" class="btn btn-warning">edit</a>
+                            
+                            <!-- Delete Button -->
+                            <form action="{{ url('delete_room', $room->id) }}"  style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this room?');">Delete</button>
+                            </form>
+                        </td>
                         
                     </tr>
                     @endforeach
