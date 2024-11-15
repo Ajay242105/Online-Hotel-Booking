@@ -36,7 +36,7 @@
 
                         <td>
                             <!-- Edit Button -->
-                            <a href="{{ url('edit_room', $room->id) }}" class="btn btn-warning">edit</a>
+                            <a href="{{ url('update_room', $room->id) }}" class="btn btn-warning">Update</a>
                             
                             <!-- Delete Button -->
                             <form action="{{ url('delete_room', $room->id) }}"  style="display:inline;">

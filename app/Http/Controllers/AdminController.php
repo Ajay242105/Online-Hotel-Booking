@@ -13,7 +13,9 @@ class AdminController extends Controller
         if(Auth::id()){
             $usertype = Auth()->user()->usertype;
             if($usertype == 'user') {
-                return view('home.index');
+                $rooms = Room::all(); // Retrieve all rooms from the database
+
+                return view('home.index',compact('rooms'));
             } else if($usertype == 'admin') {
                 return view('admin.index');
             } else {
@@ -22,8 +24,10 @@ class AdminController extends Controller
         }
     }
 
-    public function home(){
-        return view('home.index');
+    public function home()
+    {
+        $rooms = Room::all(); // Retrieve all rooms from the database
+        return view('home.index', compact('rooms')); // Pass the rooms to the view
     }
 
     public function create_room(){
@@ -74,47 +78,59 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function edit($id)
+    public function update_room($id)
     {
-        $room = Room::findOrFail($id);
+        $room = Room::find($id); 
         return view('admin.edit_room', compact('room'));
     }
 
-    // Update the room in storage
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'wifi' => 'required|string',
-            'type' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    public function edit_room(Request $request, $id)
+{
+    // Validate the request
+    $request->validate([
+        'room_title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'wifi' => 'required|string',
+        'room_type' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $room = Room::findOrFail($id);
-         $room->room_title = $request->room_title;
-        $room->image = $request->room_title; // Match input name
-        $room->description = $request->description;
-        $room->price = $request->price;
-        $room->room_type = $request->room_type; // Match input name
-        $room->wifi = $request->wifi;
+    // Find the room by ID
+    $room = Room::find($id);
 
-
-        // Handle image upload if a new one is provided
-        if ($request->hasFile('image')) {
-            // Delete old image if necessary
-            if ($room->image) {
-                Storage::delete('images/' . $room->image);
-            }
-            $imageName = time() . '.' . $request->image->extension();
-            $request ->image->storeAs('images', $imageName);
-            $room->image = $imageName;
-        }
-
-        $room->save();
-        return redirect()->back()->with('success', 'Room updated successfully.');
+    // Check if the room exists
+    if (!$room) {
+        return redirect()->back()->with('error', 'Room not found.');
     }
 
+    // Update the room details
+    $room->room_title = $request->room_title;
+    $room->description = $request->description;
+    $room->price = $request->price;
+    $room->room_type = $request->room_type;
+    $room->wifi = $request->wifi;
+
+    // Handle image upload if a new one is provided
+    if ($request->hasFile('image')) {
+        // Delete old image if it exists
+        if ($room->image) {
+            $oldImagePath = public_path('images/' . $room->image);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath); // Delete the old image file
+            }
+        }
+
+        // Store the new image
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $room->image = $imageName;
+    }
+
+    // Save the room
+    $room->save();
+
+    return redirect()->back()->with('success', 'Room updated successfully.');
+}
     
 }

@@ -37,7 +37,7 @@
                                     ">
                         {{ __('Use a recovery code') }}
                     </button>
-
+   
                     <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
                                     x-cloak
                                     x-show="recovery"
