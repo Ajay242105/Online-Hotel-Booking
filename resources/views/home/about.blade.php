@@ -1,3 +1,5 @@
+<title>Chandrakala Asharam & Gust House</title>
+
 <div class="about">
     <div class="container-fluid">
         <div class="row">

@@ -132,5 +132,6 @@ class AdminController extends Controller
 
     return redirect()->back()->with('success', 'Room updated successfully.');
 }
+
     
 }
