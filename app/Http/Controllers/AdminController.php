@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Room;
+use App\Models\Booking;
+use App\Models\Gallery;
+
+
 
 class AdminController extends Controller
 {
@@ -26,8 +30,8 @@ class AdminController extends Controller
 
     public function home()
     {
-        $rooms = Room::all(); // Retrieve all rooms from the database
-        return view('home.index', compact('rooms')); // Pass the rooms to the view
+        $rooms = Room::all(); 
+        return view('home.index', compact('rooms')); 
     }
 
     public function create_room(){
@@ -47,10 +51,10 @@ class AdminController extends Controller
 
         $room = new Room();
         $room->room_title = $request->room_title;
-        $room->image = $request->room_title; // Match input name
+        $room->image = $request->room_title; 
         $room->description = $request->description;
         $room->price = $request->price;
-        $room->room_type = $request->room_type; // Match input name
+        $room->room_type = $request->room_type;
         $room->wifi = $request->wifi;
 
         if ($request->hasFile('image')) {
@@ -131,6 +135,49 @@ class AdminController extends Controller
     $room->save();
 
     return redirect()->back()->with('success', 'Room updated successfully.');
+}
+
+public function view_bookings()
+    {
+        
+        $bookings = Booking::all();
+        
+        return view('admin.view_bookings', compact('bookings'));
+    }
+
+    public function delete_booking($id)
+    {
+        $booking = Booking::find($id);//use App\Models\Booking;
+
+        
+        $booking->delete();
+        return redirect()->back();
+    }
+
+    public function accept_booking($id)
+{
+    $booking = Booking::find($id);
+    $booking->status = 'accepted';
+    $booking->save();
+
+    return redirect()->back();
+}
+
+public function reject_booking($id)
+{
+    $booking = Booking::find($id);
+    $booking->status = 'rejected';
+    $booking->save();
+
+    return redirect()->back();
+}
+public function view_gallery(){
+    // $gallery = Gallery::find($id);//use App\Models\Booking;
+
+
+    return view('admin.gallery', compact('room'));
+
+
 }
 
     

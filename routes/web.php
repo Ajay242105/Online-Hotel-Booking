@@ -17,3 +17,8 @@ Route::post('/edit_room/{id}', [AdminController::class, 'edit_room']);
 
 Route::get('/room_details/{id}', [UserController::class, 'room_details']);
 Route::post('/add_booking/{id}', [UserController::class, 'add_booking']);
+Route::get('/view_bookings', [AdminController::class, 'view_bookings']);
+Route::get('/delete_booking/{id}', [AdminController::class, 'delete_booking']);
+Route::post('/accept_booking/{id}', [AdminController::class, 'accept_booking']);
+Route::post('/reject_booking/{id}', [AdminController::class, 'reject_booking']);
+Route::get('/view_gallery', [AdminController::class, 'view_gallery']);
