@@ -17,9 +17,11 @@ class AdminController extends Controller
         if(Auth::id()){
             $usertype = Auth()->user()->usertype;
             if($usertype == 'user') {
-                $rooms = Room::all(); // Retrieve all rooms from the database
+                $rooms = Room::all(); 
+                $gallery = Gallery::all(); 
 
-                return view('home.index',compact('rooms'));
+
+                return view('home.index',compact('rooms','gallery'));
             } else if($usertype == 'admin') {
                 return view('admin.index');
             } else {
@@ -31,9 +33,9 @@ class AdminController extends Controller
     public function home()
     {
         $rooms = Room::all(); 
-        return view('home.index', compact('rooms')); 
+        $gallery = Gallery::all(); 
+        return view('home.index', compact('rooms', 'gallery')); 
     }
-
     public function create_room(){
         return view('admin.create_room');
     }
@@ -171,14 +173,50 @@ public function reject_booking($id)
 
     return redirect()->back();
 }
-public function view_gallery(){
-    // $gallery = Gallery::find($id);//use App\Models\Booking;
+public function view_gallery()
+    {
+        $gallery = Gallery::all(); 
+        return view('admin.gallery', compact('gallery'));
+    }
 
+    public function upload_image(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    return view('admin.gallery', compact('room'));
+        $data = new Gallery;
 
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $data->image_path = $imageName;
+            $data->save();
+            return redirect()->back()->with('success', 'Image uploaded successfully.');
+        }
 
-}
+        return redirect()->back()->with('error', 'Image upload failed.');
+    }
 
-    
+    public function delete_image($id)
+    {
+        $image = Gallery::find($id);
+        if ($image) {
+            // Delete the image file from the server
+            if (file_exists(public_path('images/' . $image->image_path))) {
+                unlink(public_path('images/' . $image->image_path));
+            }
+            $image->delete();
+            return redirect()->back()->with('success', 'Image deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'Image not found.');
+    }
+
+//     public function gallery()
+// {
+//     $gallery = Gallery::all(); 
+//     return view('home.gallery', compact('gallery')); 
+// }
+
 }

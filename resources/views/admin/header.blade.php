@@ -164,6 +164,8 @@
                           {{ __('Log Out') }}
                       </x-dropdown-link>
                   </form> --}}
+                  
+                  
                   <x-app-layout>
                   </x-app-layout>
               </div>

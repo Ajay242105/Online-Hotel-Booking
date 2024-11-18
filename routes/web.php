@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
+
 
 
 Route::get('/', [AdminController::class, 'home']);
@@ -22,3 +24,8 @@ Route::get('/delete_booking/{id}', [AdminController::class, 'delete_booking']);
 Route::post('/accept_booking/{id}', [AdminController::class, 'accept_booking']);
 Route::post('/reject_booking/{id}', [AdminController::class, 'reject_booking']);
 Route::get('/view_gallery', [AdminController::class, 'view_gallery']);
+Route::post('/upload_image', [AdminController::class, 'upload_image']);
+Route::delete('/delete_image/{id}', [AdminController::class, 'delete_image']);
+
+
+Route::post('/contact', [ContactController::class, 'contact']);

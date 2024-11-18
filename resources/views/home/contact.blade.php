@@ -9,25 +9,26 @@
        </div>
        <div class="row">
           <div class="col-md-6">
-             <form id="request" class="main_form">
-                <div class="row">
+            <form id="request" class="main_form" method="POST" action="{{ url('contact') }}">
+               @csrf
+               <div class="row">
                    <div class="col-md-12 ">
-                      <input class="contactus" placeholder="Name" type="type" name="Name"> 
+                       <input class="contactus" placeholder="Name" type="text" name="name" required> 
                    </div>
                    <div class="col-md-12">
-                      <input class="contactus" placeholder="Email" type="type" name="Email"> 
+                       <input class="contactus" placeholder="Email" type="email" name="email" required> 
                    </div>
                    <div class="col-md-12">
-                      <input class="contactus" placeholder="Phone Number" type="type" name="Phone Number">                          
+                       <input class="contactus" placeholder="Phone Number" type="text" name="phone_number" required>                          
                    </div>
                    <div class="col-md-12">
-                      <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message</textarea>
+                       <textarea class="textarea" placeholder="Message" name="message" required></textarea>
                    </div>
                    <div class="col-md-12">
-                      <button class="send_btn">Send</button>
+                       <button class="send_btn" type="submit">Send</button>
                    </div>
-                </div>
-             </form>
+               </div>
+           </form>
           </div>
           <div class="col-md-6">
             <div class="map_main">
