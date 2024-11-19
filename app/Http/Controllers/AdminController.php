@@ -213,10 +213,6 @@ public function view_gallery()
         return redirect()->back()->with('error', 'Image not found.');
     }
 
-//     public function gallery()
-// {
-//     $gallery = Gallery::all(); 
-//     return view('home.gallery', compact('gallery')); 
-// }
+
 
 }

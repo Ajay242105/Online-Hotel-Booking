@@ -4,12 +4,20 @@
           <div class="col-md-12">
              <div class="titlepage">
                 <h2>Contact Us</h2>
+
              </div>
+             @if (session()->has('message'))
+             {{session()->get('message')}}
+
+             
+                 
+                 
+             @endif
           </div>
        </div>
        <div class="row">
           <div class="col-md-6">
-            <form id="request" class="main_form" method="POST" action="{{ url('contact') }}">
+            <form id="request" class="main_form" method="POST" action="{{url('contact')}}">
                @csrf
                <div class="row">
                    <div class="col-md-12 ">
@@ -28,8 +36,7 @@
                        <button class="send_btn" type="submit">Send</button>
                    </div>
                </div>
-           </form>
-          </div>
+           </form>        </div>
           <div class="col-md-6">
             <div class="map_main">
                <div class="map-responsive">

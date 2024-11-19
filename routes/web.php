@@ -28,4 +28,4 @@ Route::post('/upload_image', [AdminController::class, 'upload_image']);
 Route::delete('/delete_image/{id}', [AdminController::class, 'delete_image']);
 
 
-Route::post('/contact', [ContactController::class, 'contact']);
+Route::post('/contact', [ContactController::class,'contact']);
