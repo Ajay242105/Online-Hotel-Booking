@@ -77,6 +77,11 @@
                 <h1 style="font-size: 30px; font-weight:bold; text-align:center; color:#007bff">Update Room</h1>
 
                 @csrf
+                @if(session('success'))
+                <div class="alert alert-success" id="success-message">
+                    {{ session('success') }}
+                </div>
+            @endif
                 <div>
                     <label>Room Title</label>
                     <input type="text" name="room_title" value="{{ $room->room_title }}" required />
@@ -121,6 +126,14 @@
         </div>
     </div>
     @include('admin.footer')
+    <script>
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 4000);
+        }
+    </script>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ class UserController extends Controller
         return view('home.room_details', compact('room'));
     }
 
+
     public function add_booking(Request $request, $id)
 {
     $validator = Validator::make($request->all(), [

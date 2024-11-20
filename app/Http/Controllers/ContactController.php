@@ -27,6 +27,8 @@ class ContactController extends Controller
         $contact->save();
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Your message has been sent successfully!');
-    }
+        return redirect()->back()->with('message', 'Your message has been sent successfully!'); 
+       }
+
 }
+ 

@@ -64,6 +64,14 @@
         .btn:hover {
             background-color: #0056b3;
         }
+
+        .alert {
+            margin-bottom: 20px; /* Adjusted margin for spacing */
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            background-color: #28a745; /* Green background for success message */
+        }
     </style>
 </head>
 
@@ -74,6 +82,11 @@
         <div class="page-content">
             <form action="{{ url('/add_room') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @if(session('success'))
+                    <div class="alert alert-success" id="success-message">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div>
                     <label>Room Title</label>
                     <input type="text" name="room_title" required />
@@ -112,6 +125,15 @@
         </div>
     </div>
     @include('admin.footer')
+
+    <script>
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 4000);
+        }
+    </script>
 </body>
 
 </html>

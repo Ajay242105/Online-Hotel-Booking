@@ -27,6 +27,9 @@
                 height: auto;
             }
         }
+        .alert {
+            display: none; /* Initially hide the alert */
+        }
     </style>
 </head>
 <body>
@@ -39,7 +42,7 @@
                     <h2 style="text-align:center; font-size: 40px; font-weight:bolder; color:white;" class="h1 no-margin-bottom">Gallery</h2>
                 </div>
                 <div class="form-container">
-                    <form action="{{ url('upload_image') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('upload_image') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
                         @csrf
                         <div class="form-group">
                             <label for="image">Upload Image</label>
@@ -51,12 +54,8 @@
             </div>
 
             <div class="container mt-4">
-                @if (session('success')) 
-                    <div class="alert alert-success">{{ session('success') }}</div> 
-                @endif
-                @if (session('error')) 
-                    <div class="alert alert-danger">{{ session('error') }}</div> 
-                @endif
+                <div id="successMessage" class="alert alert-success">{{ session('success') }}</div>
+                <div id="errorMessage" class="alert alert-danger">{{ session('error') }}</div>
 
                 <h2 class="bordered-header mt-4">Uploaded Images</h2>
                 <div class="row">
@@ -65,7 +64,7 @@
                             <div class="card mb-4">
                                 <img style="height: 200px; width: 100%;" src="{{ asset('images/' . $image->image_path) }}" class="card-img-top" alt="Image">
                                 <div class="card-body">
-                                    <form action="{{ url('delete_image/' . $image->id) }}" method="POST">
+                                    <form action="{{ url('delete_image/' . $image->id) }}" method="POST" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -79,5 +78,51 @@
         </div>
     </div>
     @include('admin.footer')
+
+    <script>
+        // Show success or error messages if they exist
+        window.onload = function() {
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (successMessage.innerText.trim() !== "") {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            if (errorMessage.innerText.trim() !== "") {
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            }
+        };
+
+        // Optional: Handle form submissions to show messages
+        document.getElementById('uploadForm').addEventListener('submit', function() {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.innerText = "Image uploaded successfully!";
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                const successMessage = document.getElementById('successMessage');
+                successMessage.innerText = "Image deleted successfully!";
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                },  5000);
+                this.submit(); // Submit the form after showing the message
+            });
+        });
+    </script>
 </body>
 </html>

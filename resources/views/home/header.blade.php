@@ -17,49 +17,37 @@
                     <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarsExample04">
-                       <ul class="navbar-nav mr-auto">
-                          <li class="nav-item active">
-                             <a class="nav-link" href="{{url('/')}}">Home</a>
-                          </li>
-                          <li class="nav-item">
-                             <a class="nav-link" href="about.html">About</a>
-                          </li>
-                          <li class="nav-item">
-                             <a class="nav-link" href="room.html">Our room</a>
-                          </li>
-                          <li class="nav-item">
-                             <a class="nav-link" href="gallery.html">Gallery</a>
-                          </li>
-                          <li class="nav-item">
-                             <a class="nav-link" href="blog.html">Blog</a>
-                          </li>
-                          <li class="nav-item">
-                             <a class="nav-link" href="contact.html">Contact Us</a>
-                          </li>
-                         
-                         
-
-                         @if (Route::has('login'))
-                         {{-- <nav class="-mx-3 flex flex-1 justify-end"> --}}
-                             @auth
-                             <x-app-layout>
- 
-                             </x-app-layout>
-                             
-                             @else
-                             <li class="nav-item">
-                              <a class="btn btn-primary" href="{{url('login')}}">Login</a>
-                           </li>
-
-                                 @if (Route::has('register'))
-                                 <li class="nav-item">
-                                    <a class="btn btn-success ml-2" href="{{url('register')}}">Register</a>
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#room">Our Room</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#gallery">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                        @if (Route::has('login'))
+                            @auth
+                                <x-app-layout></x-app-layout>
+                            @else
+                                <li class="nav-item">
+                                    <a class="btn btn-primary" href="{{ url('login') }}">Login</a>
                                 </li>
-                                 @endif
-                             @endauth
-                         </nav>
-                     @endif
-                       </ul>
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="btn btn-success ml-2" href="{{ url('register') }}">Register</a>
+                                    </li>
+                                @endif
+                            @endauth
+                        @endif
+                    </ul>
                     </div>
                  {{-- </nav> --}}
               </div>

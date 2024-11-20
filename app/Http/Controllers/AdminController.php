@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Room;
 use App\Models\Booking;
 use App\Models\Gallery;
+use App\Models\Contact;
+
 
 
 
@@ -213,6 +215,12 @@ public function view_gallery()
         return redirect()->back()->with('error', 'Image not found.');
     }
 
-
+    public function viewMessages()
+    {
+        $messages = Contact::all();
+    
+        return view('admin.view_messages', compact('messages'));
+    }
+    
 
 }
