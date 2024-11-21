@@ -9,8 +9,9 @@ use App\Models\Room;
 use App\Models\Booking;
 use App\Models\Gallery;
 use App\Models\Contact;
-
-
+use Notification; 
+use App\Notifications\SendEmailNotification;
+// use Illuminate\Support\Facades\Notification;
 
 
 class AdminController extends Controller
@@ -221,6 +222,28 @@ public function view_gallery()
     
         return view('admin.view_messages', compact('messages'));
     }
-    
+    public function send_mail($id) {
+        $mail = Contact::find($id);
+        if (!$mail) {
+            return redirect()->back()->with('error', 'Contact not found.');
+        }
+        return view('admin.send_mail', compact('mail'));
+    }
 
+    public function mail(Request $request, $id) {
+        $data = Contact::find($id);
+        if (!$data) {
+            return redirect()->back()->with('error', 'Contact not found.');
+        }
+    
+        $details = [
+            'greeting' => $request->greeting,
+            'body' => $request->body,
+            'action_url' => $request->action_url,
+            'action_text' => $request->action_text,
+        ];
+    
+        Notification::send($data, new SendEmailNotification($details)); // This line is correct
+        return redirect()->back()->with('success', 'Email sent successfully.');
+    }
 }

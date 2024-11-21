@@ -19,6 +19,8 @@
                         <th>Phone Number</th>
                         <th>Message</th>
                         <th>Sent At</th>
+                        <th>Send Email</th>
+
                     </tr>S
                 </thead>
                 <tbody>
@@ -29,7 +31,12 @@
                             <td>{{ $message->phone_number }}</td>
                             <td>{{ $message->message }}</td>
                             <td>{{ $message->created_at->format('Y-m-d H:i') }}</td>
-                            
+                            <td>
+                                <a class="btn btn-success" href="{{url('send_mail',$message->id)}}">send Email</a>
+
+                            </td>
+
+
                         </tr>
                     @endforeach
                 </tbody>
